@@ -1,0 +1,29 @@
+﻿@model string
+
+@{
+    string v = "20170607";
+    string sUrl = "";
+}
+
+@switch (Model)
+{
+    case "about":
+        sUrl = @Url.Content("/Content/css/home/about.css");
+        break;
+    case "cooperation":
+        sUrl = @Url.Content("/Content/css/home/cooperation.css");
+        break;
+    case "feedback":
+        sUrl = @Url.Content("/Content/css/home/feedback.css");
+        break;
+    case "ProductService":
+        sUrl = @Url.Content("/Content/css/home/productservice.css");
+        break;
+    default:
+        sUrl = @Url.Content("~/Content/css/home/index.css");
+        break;
+
+}
+<link type="text/css" rel="stylesheet" href="@sUrl?v=@v" />
+
+

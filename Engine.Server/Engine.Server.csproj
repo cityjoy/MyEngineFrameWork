@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{49B66D79-0C5E-4508-BB87-F8BB138B88C0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Engine.Server</RootNamespace>
+    <AssemblyName>Engine.Server</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Engine.Domain">
+      <HintPath>..\Engine.Domain\bin\Debug\Engine.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="Engine.Domain.IRepository">
+      <HintPath>..\Engine.Domain.IRepository\bin\Debug\Engine.Domain.IRepository.dll</HintPath>
+    </Reference>
+    <Reference Include="Engine.Infrastructure.Data">
+      <HintPath>..\Engine.Infrastructure.Data\bin\Debug\Engine.Infrastructure.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IServer\IAdministrativeClassResourceServer.cs" />
+    <Compile Include="IServer\ICourseAdministrativeClassTableServer.cs" />
+    <Compile Include="IServer\ICourseAssignmentSectionServer.cs" />
+    <Compile Include="IServer\ICourseAssignmentTaskServer.cs" />
+    <Compile Include="IServer\ICourseAssignmentTimeSetServer.cs" />
+    <Compile Include="IServer\ICourseClassroomManageServer.cs" />
+    <Compile Include="IServer\ICourseGradeStudentServer.cs" />
+    <Compile Include="IServer\ICourseGradeTaskServer.cs" />
+    <Compile Include="IServer\ICourseSchoolSubjectServer.cs" />
+    <Compile Include="IServer\ICourseSubjectServer.cs" />
+    <Compile Include="IServer\ICourseSubjectTaskRelationServer.cs" />
+    <Compile Include="IServer\ICourseSubjectTaskServer.cs" />
+    <Compile Include="IServer\ICourseTeachingClassResourceSetServer.cs" />
+    <Compile Include="IServer\ICourseTeachingClassTableServer.cs" />
+    <Compile Include="IServer\ICourseTechingClassRoomServer.cs" />
+    <Compile Include="IServer\ICourseTechingClassStudentServer.cs" />
+    <Compile Include="IServer\ISchoolTermInfoServer.cs" />
+    <Compile Include="IServer\IServer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server\AdministrativeClassResourceServer.cs" />
+    <Compile Include="Server\BaseServer.cs" />
+    <Compile Include="Server\CourseAdministrativeClassTableServer.cs" />
+    <Compile Include="Server\CourseAssignmentSectionServer.cs" />
+    <Compile Include="Server\CourseAssignmentTaskServer.cs" />
+    <Compile Include="Server\CourseAssignmentTimeSetServer.cs" />
+    <Compile Include="Server\CourseClassroomManageServer.cs" />
+    <Compile Include="Server\CourseGradeStudentServer.cs" />
+    <Compile Include="Server\CourseGradeTaskServer.cs" />
+    <Compile Include="Server\CourseSchoolSubjectServer.cs" />
+    <Compile Include="Server\CourseSubjectServer.cs" />
+    <Compile Include="Server\CourseSubjectTaskRelationServer.cs" />
+    <Compile Include="Server\CourseSubjectTaskServer.cs" />
+    <Compile Include="Server\CourseTeachingClassResourceSetServer.cs" />
+    <Compile Include="Server\CourseTeachingClassTableServer.cs" />
+    <Compile Include="Server\CourseTechingClassRoomServer.cs" />
+    <Compile Include="Server\CourseTechingClassStudentServer.cs" />
+    <Compile Include="Server\SchoolTermInfoServer.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

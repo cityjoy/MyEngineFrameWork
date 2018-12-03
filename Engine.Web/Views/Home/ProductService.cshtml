@@ -1,0 +1,63 @@
+﻿@{
+
+    ViewBag.PageTitle = "产品服务_选课好帮手_51选校网_中学生生涯规划教育平台";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.NavId = 100;
+}
+@section HeadRef{
+    @Html.Partial("~/Views/Home/_Style.cshtml", "ProductService")
+}
+
+<div class="productservice">
+    <div class="productservice-banner"></div>
+    <div class="productservice-section productservice-section01">
+        <div class="wrap clear">
+            <div class="productservice-word fl">
+                <h3>选课参考</h3>
+                <ul>
+                    <li><em class="c-blue">●</em> 多角度的院校查询，帮助学生、老师更好了解相关院校信息</li>
+                    <li><em class="c-blue">●</em> 支持新高考模式的专业查询</li>
+                    <li><em class="c-blue">●</em> 职业参考，让学生更好的了解职业的发展方向</li>
+                    <li><em class="c-blue">●</em> 支持感兴趣的学校、专业收藏</li>
+                </ul>
+            </div>
+            <div class="productservice-img">
+                <img src="@Url.Content("/Content/images/home/ProductService/product-section01.jpg")" />
+            </div>
+        </div>
+    </div>
+    <div class="productservice-section bc-lightGrey productservice-section02">
+        <div class="wrap clear">
+            <div class="productservice-word fr">
+                <h3>选课管理</h3>
+                <ul>
+                    <li><em class="c-blue">●</em> 支持新高考模式下走班选课</li>
+                    <li><em class="c-blue">●</em> 支持多轮次的选课信息收集</li>
+                    <li><em class="c-blue">●</em> 多维度的选课结果统计</li>
+                    <li><em class="c-blue">●</em> 灵活的选课结果调整</li>
+                </ul>
+            </div>
+            <div class="productservice-img">
+                <img src="@Url.Content("/Content/images/home/ProductService/product-section02.jpg")" />
+            </div>
+        </div>
+    </div>
+    <div class="productservice-section productservice-section03">
+        <div class="wrap clear">
+            <div class="productservice-word fl">
+                <h3>排课管理</h3>
+                <ul>
+                    <li><em class="c-blue">●</em> 支持新高考模式下走班排课</li>
+                    <li><em class="c-blue">●</em> 与选课、分班实现无缝对接</li>
+                    <li><em class="c-blue">●</em> 支持多种排课规则设置</li>
+                    <li><em class="c-blue">●</em> 支持智能排课</li>
+                    <li><em class="c-blue">●</em> 生成学生个性化课表</li>
+                </ul>
+            </div>
+            <div class="productservice-img">
+                <img src="@Url.Content("/Content/images/home/ProductService/product-section03.jpg")" />
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,43 @@
+﻿@{
+    User CurrentUser = ViewBag.CurrentUser;
+}
+
+@if (CurrentUser == null || CurrentUser.Id <= 0)
+{
+    <div class="msg msg-login">
+        <div class="msgBg"></div>
+        <div class="msgMain">
+            <div class="hd">
+                <h3>用户登录 </h3>
+                <i class="close">×</i>
+            </div>
+            <div class="bd">
+                <form id="LoginForm" action="@Url.Content("~/Account/QueryLogin")" method="post">
+                    <input type="hidden" id="hdHomeUrl" value="/" />
+                    <input type="hidden" id="hdReturnUrl" value="@(Request.RawUrl)" />
+                    <table>
+                        <tr>
+                            <td width="100"><label class="tr" for="txtLoginAccount">帐号：</label></td>
+                            <td width="300">
+                                <input type="text" id="txtLoginAccount" name="LoginAccount" class="w280 fl" placeholder="用户名/手机号/邮箱" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100"><label class="tr" for="txtLoginPassword">密码：</label></td>
+                            <td width="300">
+                                <input type="password" id="txtLoginPassword" name="LoginPassword" class="w280 fl" placeholder="请输入密码" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100"><span></span></td>
+                            <td width="300">
+                                <button id="btnLogin" type="submit" class="btn bc-blue w200">登录</button>
+                                <p class="c-grey"><em>还没账号？<a class="c-blue" target="_blank" href="@Url.Content("~/Account/Register")">立即申请</a> | <a class="c-blue" target="_blank" href="@Url.Content("~/Account/FindPassword")">忘记密码？</a></em></p>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+}

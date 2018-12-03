@@ -1,0 +1,13 @@
+﻿var editor;
+function InitEditor(txtId) {
+    KindEditor.ready(function (K) {
+        editor = K.create('textarea[id="' + txtId + '"]', {
+            allowFileManager: false,
+            allowImageUpload: false,
+            items: [
+                'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', '|', 'bold', 'italic', 'underline', 'strikethrough', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', '|', 'link', 'unlink', 'anchor', 'subscript', 'superscript', 'table', '|', 'clearhtml',
+                '/', 'emoticons', 'image', 'flash', 'media', 'code', 'quote', 'baidumap', '|', 'hr', 'lineheight', 'plainpaste', 'wordpaste', '|', 'source', 'fullscreen'
+            ]
+        });
+    });
+}

@@ -1,0 +1,84 @@
+﻿@{
+    XPager CurrentPager = Model as XPager;
+}
+
+<div id="@CurrentPager.ID" class="pages tc">
+    @if (CurrentPager.RecordCount > 0 && CurrentPager.TotalPage > 1)
+    {
+        if (CurrentPager.PageIndex > 1)
+        {
+            if (string.IsNullOrEmpty(CurrentPager.JsMethod))
+            {
+        <a href="@CurrentPager.GetUrl(1)">1</a>
+            }
+            else
+            {
+        <a href="@CurrentPager.GetUrl(1)" onclick="@(CurrentPager.JsMethod)(1);return false;">1</a>
+            }
+            if (CurrentPager.StartPage - 1 > 1)
+            {
+        <span>...</span>
+            }
+        }
+        else
+        {
+        <span class="current">1</span>
+        }
+
+        
+        
+        for (int p = CurrentPager.StartPage; p <= CurrentPager.EndPage; p++)
+        {
+            if (p == 1 || p == CurrentPager.TotalPage) { continue; }
+            if (CurrentPager.PageIndex == p)
+            {
+        <span class="current">@p</span>
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(CurrentPager.JsMethod))
+                {
+        <a href="@CurrentPager.GetUrl(p)">@p</a>
+                }
+                else
+                {
+        <a href="@CurrentPager.GetUrl(p)" onclick="@(CurrentPager.JsMethod)(@p);return false;">@p</a>
+                }
+            }
+        }
+
+        
+        
+        if (CurrentPager.TotalPage > 1)
+        {
+            if (CurrentPager.PageIndex < CurrentPager.TotalPage)
+            {
+                if (CurrentPager.TotalPage - CurrentPager.EndPage > 1)
+                {
+        <span class="text">...</span>
+                }
+                if (string.IsNullOrEmpty(CurrentPager.JsMethod))
+                {
+        <a href="@CurrentPager.GetUrl(CurrentPager.TotalPage)">@CurrentPager.TotalPage</a>
+                }
+                else
+                {
+        <a href="@CurrentPager.GetUrl(CurrentPager.TotalPage)" onclick="@(CurrentPager.JsMethod)(@CurrentPager.TotalPage);return false;">@CurrentPager.TotalPage</a>
+                }
+            }
+            else
+            {
+        <span class="current">@CurrentPager.TotalPage</span>
+            }
+        }
+    }
+    else
+    {
+        if (CurrentPager.RecordCount == 0 && !string.IsNullOrEmpty(CurrentPager.NoDataInfo))
+        {
+        <div class="pager_nodata">@CurrentPager.NoDataInfo</div>
+        }
+    }
+        
+    <div class="clear"></div>
+</div>

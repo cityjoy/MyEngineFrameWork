@@ -1,0 +1,103 @@
+﻿@{
+     User admin = ViewBag.CurrentUser;
+}
+    <article class="page-container">
+        <form class="form form-horizontal" id="form-admin-add">
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>账号：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" value="@admin.Username" placeholder="" id="Username" name="Username" disabled="disabled">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>姓名：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" value="@admin.RealName" placeholder="" id="RealName" name="RealName">
+                </div>
+            </div>
+           
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" value="@admin.Phone" placeholder="" id="Mobile" name="Phone">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>邮箱：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" value="@admin.EMail" placeholder=" " name="Email" id="EMail">
+                </div>
+            </div>
+            
+            <div class="row cl">
+                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+                </div>
+            </div>
+        </form>
+    </article>
+
+@section FootRef{
+<script type="text/javascript" src="~/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="~/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="~/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+
+        $("#form-admin-add").validate({
+            rules: {
+                Username: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 16
+                },
+                RealName: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 16
+                },
+               
+                Phone: {
+                    required: true,
+                    isPhone: true,
+                },
+                EMail: {
+                    required: true,
+                    EMail: true,
+                }
+            },
+            onkeyup: false,
+            focusCleanup: true,
+            success: "valid",
+            submitHandler: function (form) {
+                $(form).ajaxSubmit({
+                    type: 'post',
+                    url: "/Account/SaveAccount",
+                    success: function (data) {
+                        layer.msg(data.Message, { icon: 1, time: 1000 });
+                        if (data.Result > 0) {
+                            setTimeout(function () {
+                                window.top.location.href = "/Login/Index";
+                            }, 300);
+                        }
+                    },
+                    error: function (XmlHttpRequest, textStatus, errorThrown) {
+                        layer.msg(data.Message, { icon: 1, time: 1000 });
+                    }
+                });
+                //var index = parent.layer.getFrameIndex(window.name);
+                //parent.$('.btn-refresh').click();
+                //parent.layer.close(index);
+            }
+        });
+    });
+</script>
+
+    }
+

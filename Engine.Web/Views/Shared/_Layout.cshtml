@@ -1,0 +1,174 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@*@using StackExchange.Profiling;*@
+@using Engine.Infrastructure.Utils;
+@{
+    User CurrentUser = ViewBag.CurrentUser;
+    bool IsLogin = CurrentUser != null && CurrentUser.Id > 0;
+
+    string PageTitle = ConvertHelper.ToString(ViewBag.PageTitle, string.Empty);
+    string PageKeywords = ConvertHelper.ToString(ViewBag.MetaKeywords, string.Empty);
+    string PageDescription = ConvertHelper.ToString(ViewBag.MetaDescription, string.Empty);
+    string PageName = ConvertHelper.ToString(ViewBag.PageName, string.Empty);
+
+
+}
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="baidu-site-verification" content="kZdLVmL2Pm" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <title>@(PageTitle)</title>
+    @if (!string.IsNullOrEmpty(PageName))
+    {
+        <meta itemprop="name" content="@PageName" />
+    }
+    @if (!string.IsNullOrEmpty(PageKeywords))
+    {
+        <meta name="Keywords" content="@PageKeywords" />
+    }
+    @if (!string.IsNullOrEmpty(PageDescription))
+    {
+        <meta name="Description" content="@PageDescription" />
+    }
+    <!--[if IE 6]>
+    <script type="text/javascript" src="@Url.Content("~/Content/js/home/ie6.js")" ></script>
+    <![endif]-->
+    <!--[if lt IE 9]>
+      <script type="text/javascript" src="@Url.Content("~/Scripts/respondJs/respond.js")"></script>
+    <![endif]-->
+    @RenderSection("HeadRef", false)
+</head>
+<body>
+    <div id="header" class="clear">
+        <div class="wrap">
+            <div class="header-right">
+                <div id="headerMenu" class="header-right-menu icon"></div>
+
+                <ul class="header-nav fl">
+                    <li>
+                        <span><a href="@(Constants.MAIN_SITE)" target="_blank">首页</a></span>
+                    </li>
+                </ul>
+
+                @if (CurrentUser == null || CurrentUser.Id <= 0)
+                {
+                    <ul class="fr header-login">
+                        <li><a id="login" class="jNoLogin" href="javascript:void(0)">登录</a>&nbsp;&nbsp;|</li>
+                        <li><a href="">返回主页</a></li>
+                    </ul>
+                }
+                else
+                {
+
+                    <div class="fr header-user">
+                        <span>
+                            <a href="/account/index">
+                                <img src="/Content/images/global/default_header.png" >@CurrentUser.RealName
+                            </a>
+                        </span>
+                        <ul style="display: none;">
+                            <li><a href="/account/index">个人档案</a></li>
+                            <li><a href="javascript:void(0)" onclick="Logout();return false;">退出</a></li>
+                        </ul>
+                    </div>
+
+
+                }
+
+            </div>
+        </div>
+
+    </div>  
+    <div id="stage" class="content">
+        <div id="main">
+            @RenderBody()
+        </div>
+    </div>
+
+    @Html.Partial("~/Views/Shared/__LoginBox.cshtml")
+    <!--[if IE 6]>
+    <script type="text/javas
+    <!--[if IE 6]>
+    <![endif]-->
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery/jquery-1.7.1.min.js")?v=20170904"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/lodash/lodash.min.js")?v=20170904"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/js/lib51.js")?v=20170904"></script>
+    @RenderSection("FootRef", false)
+    <script type="text/javascript" src="@Url.Content("~/Scripts/seajs/sea.js")?v=20170904"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/js/init.js")?v=20170904"></script>
+    @*<script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <script src="/signalr/hubs"></script>*@
+    @*<script type="text/javascript" data-main="@Url.Content("~/Content/js/app.js")" src="@Url.Content("~/Scripts/requirejs/require.js")?v=20160929"></script>*@
+    <script type="text/javascript">
+        var IsLogin = @(IsLogin ? "true" : "false");
+        var CurrentUser = null;
+        @if (IsLogin)
+        {
+
+            var U = new { UserId = CurrentUser.Id,UserName = CurrentUser.Username };
+
+            <text>CurrentUser = @Html.Raw(JsonConvert.SerializeObject(U))</text>
+        }
+    </script>
+    @*@if (CurrentUser != null)
+    {
+        //用户登录时客户端发起用户多客户端登录检查
+        <script type="text/javascript">
+
+            $(function () {
+                var messageHub = $.connection.messageHub
+                function Init(operation, new_session) {
+                    var userId = CurrentUser['UserId'];
+                    var sessionId = $.cookie("Engine.NET_SessionId");
+                    messageHub.server.send(userId, sessionId).done(function (data) {
+
+                        if (data)//客户端已经登录
+                        {
+
+                            if (operation == "OffLine" && sessionId != data.replace("+", " ")) {
+                                ShowAlert('您的账号在其他客户端登录,5秒后将被迫下线');
+                                var t = setTimeout(Logout, 5000);
+
+                            }
+                            else if (sessionId != data.replace("+", " ")) {
+                                var url = '/Account/QueryLogout';
+                                AjaxGet(url, null, function (jsonData) {
+                                    var result = parseInt(jsonData["Result"]),
+                                        message = jsonData["Message"],
+                                        url = jsonData.Data["ReturnUrl"];
+
+                                    if (url.length > 0) {
+                                        location.href = url;
+                                    } else {
+                                        location.href = "/";
+                                    }
+                                });
+                            }
+                        }
+
+                    });
+
+
+                }
+                $.extend(messageHub.client, {
+                    UpdateInfo: function (operation, new_session) {
+                        return Init(operation, new_session);
+                    }
+                });
+                $.connection.hub.start().pipe(Init);//开启客户端SignalR，并首次运行init
+
+            });
+        </script>
+    }*@
+
+    @*@MiniProfiler.RenderIncludes();*@
+</body>
+@RenderSection("foot", false)
+</html>

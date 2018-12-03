@@ -1,0 +1,21 @@
+﻿@{
+    User CurrentUser = ViewBag.CurrentUser;
+    bool IsLogin = CurrentUser != null && CurrentUser.Id > 0;
+    ViewBag.PageTitle = "Engine框架前台系统";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section HeadRef{
+    @Html.Partial("~/Views/Home/_Style.cshtml", "")
+}
+<div class="index" id="m_home">
+    <div class="index-banner">
+        <div class="wrap">
+        </div>
+    </div>
+    <div class="index-section pt60 pb60">
+        <div class="wrap">
+
+        </div>
+    </div>
+</div>
+  

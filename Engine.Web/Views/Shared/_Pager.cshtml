@@ -1,0 +1,91 @@
+﻿@{
+    XPager CurrentPager = Model as XPager;
+}
+
+<div id="@CurrentPager.ID" class="pages tr">
+
+    @if (CurrentPager.RecordCount > 0 && CurrentPager.TotalPage > 1)
+    {
+        if (CurrentPager.PageIndex > 1)
+        {
+        <a href="@CurrentPager.GetPrevUrl()">上一页</a>
+        }
+
+        if (CurrentPager.PageIndex > 1)
+        {
+            if (string.IsNullOrEmpty(CurrentPager.JsMethod))
+            {
+        <a href="@CurrentPager.GetUrl(1)">1</a>
+            }
+            else
+            {
+        <a href="@CurrentPager.GetUrl(1)" onclick="@(CurrentPager.JsMethod)(1);return false;">1</a>
+            }
+            if (CurrentPager.StartPage - 1 > 1)
+            {
+        <em>...</em>
+            }
+        }
+        else
+        {
+        <a class="current" href="javascript:void(0)">1</a>
+        }
+
+        for (int p = CurrentPager.StartPage; p <= CurrentPager.EndPage; p++)
+        {
+            if (p == 1 || p == CurrentPager.TotalPage) { continue; }
+            if (CurrentPager.PageIndex == p)
+            {
+        <a class="current" href="javascript:void(0)">@p</a>
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(CurrentPager.JsMethod))
+                {
+        <a href="@CurrentPager.GetUrl(p)">@p</a>
+                }
+                else
+                {
+        <a href="@CurrentPager.GetUrl(p)" onclick="@(CurrentPager.JsMethod)(@p);return false;">@p</a>
+                }
+            }
+        }
+
+        if (CurrentPager.TotalPage > 1)
+        {
+            if (CurrentPager.PageIndex < CurrentPager.TotalPage)
+            {
+                if (CurrentPager.TotalPage - CurrentPager.EndPage > 1)
+                {
+        <em>...</em>
+                }
+                if (string.IsNullOrEmpty(CurrentPager.JsMethod))
+                {
+        <a href="@CurrentPager.GetUrl(CurrentPager.TotalPage)">@CurrentPager.TotalPage</a>
+                }
+                else
+                {
+        <a href="@CurrentPager.GetUrl(CurrentPager.TotalPage)" onclick="@(CurrentPager.JsMethod)(@CurrentPager.TotalPage);return false;">@CurrentPager.TotalPage</a>
+                }
+            }
+            else
+            {
+        <a class="current" href="javascript:void(0)">@CurrentPager.TotalPage</a>
+            }
+            if (CurrentPager.PageIndex < CurrentPager.TotalPage)
+            {
+        <a href="@CurrentPager.GetNextUrl()">下一页</a>
+            }
+        }
+
+
+    }
+    else
+    {
+        if (CurrentPager.RecordCount == 0 && !string.IsNullOrEmpty(CurrentPager.NoDataInfo))
+        {
+        <div class="pager_nodata">@CurrentPager.NoDataInfo</div>
+        }
+    }
+    
+</div>
