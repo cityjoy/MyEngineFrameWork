@@ -13,7 +13,6 @@ using Engine.Infrastructure.Data;
 using Engine.Infrastructure.Utils;
 using System.Web;
 using Engine.Application.Model;
-using Engine.Doman.Cache;
 using Engine.Domain.Model;
 using System.Configuration;
 using JWT;
@@ -156,11 +155,12 @@ namespace Engine.Application
                     if (user.Password.Trim() == model.LoginPassword.Trim())
                     {
                         tokenResult.Result = 1;
-                        User loginUser = UserCache.GetUserById(user.Id);
+                        string cacheKey = string.Concat("USER_", user.Id);
+                        User loginUser = CacheUtil.Get<User>(cacheKey);
                         if (loginUser == null)
                         {
-                            UserCache.SetUser(user);
-                            loginUser = UserCache.GetUserById(user.Id);
+                            CacheUtil.Insert<User>(cacheKey,user,7200);
+                            loginUser = CacheUtil.Get<User>(cacheKey);
                         }
                         tokenResult.Data = loginUser;
                         tokenResult.AuthUser = loginUser;
@@ -235,8 +235,8 @@ namespace Engine.Application
                                 throw new Exception("access_token needs to be refreshed!");
                             }
 
-                            User user = UserCache.GetUserById(userId);
-
+                            string cacheKey = string.Concat("USER_", userId);
+                            User user = CacheUtil.Get<User>(cacheKey);
                             if (user != null && string.Compare(user.Password, password, true) == 0)
                             {
                                 return user;
@@ -302,7 +302,8 @@ namespace Engine.Application
                             User user = GetSingle(m => m.Id == userId);
                             if (user != null && string.Compare(user.Password, password, true) == 0)
                             {
-                                UserCache.SetUser(user);
+                                string cacheKey = string.Concat("USER_", userId);
+                                CacheUtil.Insert<User>(cacheKey,user,7200);
                                 tokenResult.Result = 1;
                                 tokenResult.AuthUser = user;
                                 tokenResult.AuthToken = newToken;
@@ -466,7 +467,8 @@ namespace Engine.Application
                         IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
                         byte[] secret = Encoding.Default.GetBytes(ConfigurationManager.AppSettings["SecureKey"]);
                         var token = encoder.Encode(payload, secret);
-                        UserCache.SetUser(user, 7200);
+                        string cacheKey = string.Concat("USER_", user.Id);
+                        CacheUtil.Insert<User>(cacheKey, user, 7200);
                         tokenResult.AuthToken = token;
                     }
                     else
@@ -531,7 +533,8 @@ namespace Engine.Application
                         JwtAuthUser authInfo = JsonConvert.DeserializeObject<JwtAuthUser>(json);
                         if (authInfo != null)
                         {
-                            User user = UserCache.GetUserById(authInfo.UserId);
+                            string cacheKey = string.Concat("USER_", authInfo.UserId);
+                            User user = CacheUtil.Get<User>(cacheKey);
                             long starTimestamp = authInfo.Exp - 600;//过期前十分钟
                             long nowTimestamp = DateTimeHelper.ConvertToUnixTimestamp(DateTime.Now);
                             if (nowTimestamp > starTimestamp && nowTimestamp < authInfo.Exp)//过期前十分钟刷新token
@@ -551,7 +554,7 @@ namespace Engine.Application
                                     IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
                                     IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
                                     var token = encoder.Encode(payload, secret);
-                                    UserCache.SetUser(user, 7200);
+                                    CacheUtil.Insert<User>(cacheKey,user,7200);
                                     newAccessToken = new UserAccessToken();
                                     newAccessToken.AuthToken = token;
                                 }
