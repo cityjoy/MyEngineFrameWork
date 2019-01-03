@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cache\UserCache.cs" />
     <Compile Include="Entity\Courses.cs" />
     <Compile Include="Entity\Enrollment.cs" />
     <Compile Include="Entity\Student.cs" />
@@ -51,12 +50,6 @@
     <Compile Include="Model\EnumExtension.cs" />
     <Compile Include="Model\JWTAuthInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Engine.Infrastructure\Engine.Infrastructure.csproj">
-      <Project>{47431de8-2676-40a9-820b-23a250243f31}</Project>
-      <Name>Engine.Infrastructure</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
