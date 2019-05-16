@@ -210,6 +210,9 @@ namespace Engine.Infrastructure.Utils
                 }
                 if (buffer != null)
                 {
+                    #region 这个在Post的时候，一定要加上，如果服务器返回错误，他还会继续再去请求，不会使用之前的错误数据，做返回数据
+                    request.ServicePoint.Expect100Continue = false;
+                    #endregion
                     request.ContentLength = buffer.Length;
                     request.GetRequestStream().Write(buffer, 0, buffer.Length);
                 }
